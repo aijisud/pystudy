@@ -1,5 +1,6 @@
 import os
 from multiprocessing import Pool, Process
+from multiprocessing.dummy import Pool as ThreadPool
 from PIL import Image
 import time
 
@@ -14,7 +15,7 @@ def create_thumbnail(filename):
     im = Image.open(filename)
     im.thumbnail((75, 75), Image.ANTIALIAS)
     base, fname = os.path.split(filename)
-    save_path = os.path.join(base, 'thumbs', fname)
+    save_path = os.path.join(base, "thumbs", fname)
     im.save(save_path)
 
 
@@ -43,6 +44,8 @@ if __name__ == '__main__':
     print(time_end - time_begin)
     """
 
+
+    """
     #pool
     #796
     #7.114084243774414
@@ -56,23 +59,23 @@ if __name__ == '__main__':
     time_end = time.clock()
     print(time_end - time_begin)
 
+    print("****************")
+    """
 
     #pool
-    for i in range(4, 33):
-        time_begin = time.clock()
+    i = 999
+    print("****")
+    print(i)
+    time_begin = time.clock()
 
-        pool = Pool(i)
-        pool.map(create_thumbnail, images)
-        pool.close()
-        pool.join()
+    pool = ThreadPool()
+    pool.map(create_thumbnail, images)
+    pool.close()
+    pool.join()
 
-        time_end = time.clock()
-        print(i)
-        print(time_end - time_begin)
-        print("****")
-
-
-
+    time_end = time.clock()
+    print(time_end - time_begin)
+    print("****")
 
 
     """
